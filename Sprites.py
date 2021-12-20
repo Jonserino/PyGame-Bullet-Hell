@@ -17,7 +17,7 @@ class Player(pg.sprite.Sprite):
         self.pos = vec(100, 100)
         self.rect.center = self.pos
         self.speed = 2.5
-        self.health = 5
+        self.health = 10
 
     def update(self):
         keys = pg.key.get_pressed()
