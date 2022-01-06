@@ -69,64 +69,67 @@ points = -1
 
 text_you_died = comic_sans30.render('You Died', False, red)
 
-toggle = False
-playing = True
-while playing:
-    clock.tick(fps)
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
+def main():
+    toggle = False
+    playing = True
+    while playing:
+        clock.tick(fps)
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                playing = False
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_TAB:
+                    if not toggle:
+                        toggle = True
+                    else:
+                        toggle = False
+
+        screen.fill(black)
+        keys = pg.key.get_pressed()
+
+        if keys[pg.K_ESCAPE]:
             playing = False
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_TAB:
-                if not toggle:
-                    toggle = True
-                else:
-                    toggle = False
+        if keys[pg.K_q]:
+            playing = False
+        if toggle:
+            pg.draw.rect(screen, white, menu)
+            pg.draw.rect(screen, gray, button1)
+        if keys[pg.K_r]:
+            main()
+        
+        pg.draw.rect(screen, gray, gray_bar)
 
-    screen.fill(black)
-    keys = pg.key.get_pressed()
+        all_sprites.update()
 
-    if keys[pg.K_ESCAPE]:
-        playing = False
-    if keys[pg.K_q]:
-        playing = False
-    if toggle:
-        pg.draw.rect(screen, white, menu)
-        pg.draw.rect(screen, gray, button1)
+        hits = pg.sprite.spritecollide(player, enemies, True)
+        while len(enemies) < 1:
+            knight = Enemy()
+            all_sprites.add(knight)
+            enemies.add(knight)
+            points += 1
+        hits2 = pg.sprite.spritecollide(player, fireballs, True)
+        while len(fireballs) < 2:
+            fireball = Fireball()
+            all_sprites.add(fireball)
+            fireballs.add(fireball)
+            points += 1
 
-    pg.draw.rect(screen, gray, gray_bar)
+        if hits:
+            player.health -= knight.attack
+        if hits2:
+            player.health -= fireball.attack
+        if player.health <= 0:
+            screen.blit(text_you_died, middle)
 
-    all_sprites.update()
+        text_player_hp = comic_sans30.render(str(player.health) + 'HP', False, red)
 
-    hits = pg.sprite.spritecollide(player, enemies, True)
-    while len(enemies) < 1:
-        knight = Enemy()
-        all_sprites.add(knight)
-        enemies.add(knight)
-        points += 1
-    hits2 = pg.sprite.spritecollide(player, fireballs, True)
-    while len(fireballs) < 2:
-        fireball = Fireball()
-        all_sprites.add(fireball)
-        fireballs.add(fireball)
-        points += 1
+        screen.blit(text_player_hp, (10, 5))
 
-    if hits:
-        player.health -= knight.attack
-    if hits2:
-        player.health -= fireball.attack
-    if player.health <= 0:
-        screen.blit(text_you_died, middle)
+        all_sprites.draw(screen)
 
-    text_player_hp = comic_sans30.render(str(player.health) + 'HP', False, red)
+        print("hits", points)
 
-    screen.blit(text_player_hp, (10, 5))
-
-    all_sprites.draw(screen)
-
-    print("hits", points)
-
-    pg.display.update()
+        pg.display.update()
 
 pg.quit()
 
