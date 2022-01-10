@@ -82,13 +82,18 @@ class Fireball(pg.sprite.Sprite):
         self.pos.x += self.speed_x
         self.pos.y += self.speed_y
 
+
         if self.pos.x > 1200:
             self.speed_x = -5
+            self.image = pg.transform.flip(self.image, True, False)
         if self.pos.x < 0:
             self.speed_x = 5
+            self.image = pg.transform.flip(self.image, True, False)
         if self.pos.y > 800:
             self.speed_y = -5
+            self.image = pg.transform.flip(self.image, False, True)
         if self.pos.y < 0:
             self.speed_y = 5
+            self.image = pg.transform.rotate(self.image, -45)
 
         self.rect.center = self.pos

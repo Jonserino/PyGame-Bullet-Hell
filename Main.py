@@ -119,7 +119,6 @@ while playing:
         player.health -= fireball.attack
     if player.health <= 0:
         screen.blit(text_you_died, middle)
-        clock.tick == 0
 
     text_player_hp = comic_sans30.render(str(player.health) + 'HP', False, red)
 
