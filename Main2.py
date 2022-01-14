@@ -38,9 +38,8 @@ class Game():
         self.my_player = Player()
         self.all_sprites.add(self.my_player)
     
-        self.fireball = Fireball()
-        self.all_sprites.add(self.fireball)
-        self.projectiles.add(self.fireball)
+        self.my_shield = Shield(self.my_player)
+        self.all_sprites.add(self.my_shield)
 
         self.run()
         
@@ -82,11 +81,21 @@ class Game():
             self.points += 1
         self.hits2 = pg.sprite.spritecollide(self.my_player, self.projectiles, True)
         while len(self.projectiles) < 2:
-            fireball = Fireball()
+            fireball = Fireball(self)
             self.all_sprites.add(fireball)
             self.projectiles.add(fireball)
             self.points += 1
-        
+        self.block = pg.sprite.spritecollide(self.my_shield, self.enemies, True)
+        while len(self.enemies) < 1:
+            knight = Enemy(self)
+            self.all_sprites.add(knight)
+            self.enemies.add(knight)
+        self.block2 = pg.sprite.spritecollide(self.my_shield, self.projectiles, True)
+        while len(self.projectiles) < 2:
+            fireball = Fireball(self)
+            self.all_sprites.add(fireball)
+            self.projectiles.add(fireball)
+
         if self.hits:
             self.my_player.health -= knight.attack
         if self.hits2:
