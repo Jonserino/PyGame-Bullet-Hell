@@ -37,11 +37,7 @@ class Game():
         
         self.my_player = Player()
         self.all_sprites.add(self.my_player)
-        
-        self.knight = Enemy()
-        self.all_sprites.add(self.knight)
-        self.enemies.add(self.knight)
-
+    
         self.fireball = Fireball()
         self.all_sprites.add(self.fireball)
         self.projectiles.add(self.fireball)
@@ -80,7 +76,7 @@ class Game():
         
         self.hits = pg.sprite.spritecollide(self.my_player, self.enemies, True)
         while len(self.enemies) < 1:
-            knight = Enemy()
+            knight = Enemy(self)
             self.all_sprites.add(knight)
             self.enemies.add(knight)
             self.points += 1
