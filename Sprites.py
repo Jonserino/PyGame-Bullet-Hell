@@ -14,13 +14,12 @@ shield_image_up = pg.image.load("shield_up.png")
 shield_image_down = pg.image.load("shield_down.png")
 shield_image_left = pg.image.load("shield_left.png")
 shield_image_right = pg.image.load("shield_right.png")
-'''
-arrow_image = pg.image.load(".png")
-arrow_image_up = pg.image.load(".png")
-arrow_image_down = pg.image.load(".png")
-arrow_image_left = pg.image.load(".png")
-arrow_image_right = pg.image.load(".png")
-'''
+arrow_image = pg.image.load("arrow.png")
+arrow_image_up = pg.image.load("arrow_up.png")
+arrow_image_down = pg.image.load("arrow_down.png")
+arrow_image_left = pg.image.load("arrow_left.png")
+arrow_image_right = pg.image.load("arrow_right.png")
+
 
 class Player(pg.sprite.Sprite):
     def __init__(self):
@@ -56,11 +55,11 @@ class Shield(pg.sprite.Sprite):
         self.image_down = shield_image_down
         self.image_left = shield_image_left
         self.image_right = shield_image_right
-        self.image = pg.transform.scale(self.image, (110, 20))
-        self.image_up = pg.transform.scale(self.image_up, (110, 20))
-        self.image_down = pg.transform.scale(self.image_down, (110, 20))
-        self.image_left = pg.transform.scale(self.image_left, (20, 110))
-        self.image_right = pg.transform.scale(self.image_right, (20, 110))
+        self.image = pg.transform.scale(self.image, (90, 20))
+        self.image_up = pg.transform.scale(self.image_up, (90, 20))
+        self.image_down = pg.transform.scale(self.image_down, (90, 20))
+        self.image_left = pg.transform.scale(self.image_left, (20, 90))
+        self.image_right = pg.transform.scale(self.image_right, (20, 90))
         self.rect = self.image.get_rect()
         self.pos = vec(600, 350)
         self.rect.center = self.pos
@@ -177,7 +176,7 @@ class Fireball(pg.sprite.Sprite):
         
 
         self.rect.center = self.pos
-'''
+
 class Arrow(pg.sprite.Sprite):
     
     def __init__(self, game):
@@ -228,4 +227,4 @@ class Arrow(pg.sprite.Sprite):
         
 
         self.rect.center = self.pos
-'''
+        
