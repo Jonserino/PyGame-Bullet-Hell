@@ -33,7 +33,8 @@ class Game():
     def new(self):
         self.all_sprites = pg.sprite.Group()
         self.enemies = pg.sprite.Group()
-        self.projectiles = pg.sprite.Group()
+        self.fireballs = pg.sprite.Group()
+        self.arrows = pg.sprite.Group()
         
         self.my_player = Player()
         self.all_sprites.add(self.my_player)
@@ -74,42 +75,40 @@ class Game():
         self.all_sprites.update()
         
         self.hits = pg.sprite.spritecollide(self.my_player, self.enemies, True)
-        while len(self.enemies) < 1:
-            knight = Enemy(self)
-            self.all_sprites.add(knight)
-            self.enemies.add(knight)
-            self.points += 1
-        self.hits2 = pg.sprite.spritecollide(self.my_player, self.projectiles, True)
-        while len(self.projectiles) < 2:
-            fireball = Fireball(self)
-            self.all_sprites.add(fireball)
-            self.projectiles.add(fireball)
-            self.points += 1
-        self.hits3 = pg.sprite.spritecollide(self.my_player, self.projectiles, True)
-        while len(self.projectiles) < 2:
-            arrow = Arrow(self)
-            self.all_sprites.add(arrow)
-            self.projectiles.add(arrow)
+     
+        self.hits3 = pg.sprite.spritecollide(self.my_player, self.arrows, True)
+        
+        self.hits3 = pg.sprite.spritecollide(self.my_player, self.fireballs, True)
+        if self.hits3:
             self.points += 1
         self.block = pg.sprite.spritecollide(self.my_shield, self.enemies, True)
+   
+        self.block3 = pg.sprite.spritecollide(self.my_shield, self.arrows, True)
+        
+        self.block3 = pg.sprite.spritecollide(self.my_shield, self.fireballs, True)
+        while len(self.fireballs) < 2:
+            fireball = Fireball(self)
+            self.all_sprites.add(fireball)
+            self.fireballs.add(fireball)
+            self.points += 1      
+            
+  
         while len(self.enemies) < 1:
             knight = Enemy(self)
             self.all_sprites.add(knight)
             self.enemies.add(knight)
-        self.block2 = pg.sprite.spritecollide(self.my_shield, self.projectiles, True)
-        while len(self.projectiles) < 2:
-            fireball = Fireball(self)
-            self.all_sprites.add(fireball)
-            self.projectiles.add(fireball)
-        self.block3 = pg.sprite.spritecollide(self.my_shield, self.projectiles, True)
-        while len(self.projectiles) < 2:
-            arrow = Arrow(self)
-            self.all_sprites.add(arrow)
-            self.projectiles.add(arrow)
+            self.points += 1    
+            
+    
+      
+        while len(self.arrows) < 2:
+            self.arrow = Arrow(self)
+            self.all_sprites.add(self.arrow)
+            self.arrows.add(self.arrow)
         
         if self.hits:
             self.my_player.health -= knight.attack
-        if self.hits2:
+        if self.hits3:
             self.my_player.health -= fireball.attack
         if self.my_player.health <= 0:
             self.screen.blit(self.text_you_died, middle)

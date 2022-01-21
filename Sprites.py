@@ -105,6 +105,11 @@ class Enemy(pg.sprite.Sprite):
         self.speed_x = 1
         self.speed_y = 1
         self.attack = 10
+        
+        list = [vec(0,400),vec(600, 0),vec(1200, 400),vec(600, 800)]
+        
+        self.pos = list[randint(0,3)]
+
 
     def update(self):
         self.pos.x += self.speed_x
@@ -148,8 +153,11 @@ class Fireball(pg.sprite.Sprite):
         self.speed_x = 3
         self.speed_y = 3
         self.attack = 1
-        self.up = False
-        self.right = False
+        
+        list = [vec(0,400),vec(600, 0),vec(1200, 400),vec(600, 800)]
+        
+        self.pos = list[randint(0,3)]
+
 
     def update(self):
         self.pos.x += self.speed_x
@@ -188,41 +196,43 @@ class Arrow(pg.sprite.Sprite):
         self.image_left = arrow_image_left
         self.image_right = arrow_image_right
         self.image = pg.transform.scale(self.image, (40, 35))
-        self.image_up = pg.transform.scale(self.image_up, (35, 40))
-        self.image_down = pg.transform.scale(self.image_down, (35, 40))
-        self.image_left = pg.transform.scale(self.image_right, (40, 35))
-        self.image_right = pg.transform.scale(self.image_left, (40, 35))
+        self.image_up = pg.transform.scale(self.image_up, (50, 40))
+        self.image_down = pg.transform.scale(self.image_down, (50, 40))
+        self.image_left = pg.transform.scale(self.image_right, (40, 50))
+        self.image_right = pg.transform.scale(self.image_left, (40, 50))
         self.rect = self.image.get_rect()
-        self.pos = vec(600, 200)
+        self.pos = vec(0, 400)
         self.rect.center = self.pos
         self.life = 2
         self.speed_x = 3
         self.speed_y = 3
         self.attack = 1
-        self.up = False
-        self.right = False
+        
+        list = [vec(0,400),vec(600, 0),vec(1200, 400),vec(600, 800)]
+        
+        self.pos = list[randint(0,3)]
+            
 
     def update(self):
         self.pos.x += self.speed_x
         self.pos.y += self.speed_y
-
-
+    
         if self.game.my_player.pos.x < self.pos.x:
             self.speed_x = -3
             self.image = self.image_left
-            self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         if self.game.my_player.pos.x > self.pos.x:
             self.speed_x = 3
             self.image = self.image_right
-            self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         if self.game.my_player.pos.y < self.pos.y:
             self.speed_y = -3
             self.image = self.image_up
-            self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         if self.game.my_player.pos.y > self.pos.y:
             self.speed_y = 3
             self.image = self.image_down
-            self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         
         
 
