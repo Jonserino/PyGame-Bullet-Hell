@@ -55,11 +55,11 @@ class Shield(pg.sprite.Sprite):
         self.image_down = shield_image_down
         self.image_left = shield_image_left
         self.image_right = shield_image_right
-        self.image = pg.transform.scale(self.image, (90, 20))
-        self.image_up = pg.transform.scale(self.image_up, (90, 20))
-        self.image_down = pg.transform.scale(self.image_down, (90, 20))
-        self.image_left = pg.transform.scale(self.image_left, (20, 90))
-        self.image_right = pg.transform.scale(self.image_right, (20, 90))
+        self.image = pg.transform.scale(self.image, (60, 15))
+        self.image_up = pg.transform.scale(self.image_up, (60, 15))
+        self.image_down = pg.transform.scale(self.image_down, (60, 15))
+        self.image_left = pg.transform.scale(self.image_left, (15, 60))
+        self.image_right = pg.transform.scale(self.image_right, (15, 60))
         self.rect = self.image.get_rect()
         self.pos = vec(600, 350)
         self.rect.center = self.pos
@@ -90,7 +90,6 @@ class Shield(pg.sprite.Sprite):
 
         self.rect.center = self.pos
 
-
 class Enemy(pg.sprite.Sprite):
 
     def __init__(self, game):
@@ -102,9 +101,12 @@ class Enemy(pg.sprite.Sprite):
         self.pos = vec(1200, 400)
         self.rect.center = self.pos
         self.life = 10
-        self.speed_x = 1
-        self.speed_y = 1
+        self.speed_x = self.game.difficulty
+        self.speed_y = self.game.difficulty
         self.attack = 10
+        
+        self.increase_difficulty = False
+        self.difficulty_amount = 100
         
         list = [vec(0,400),vec(600, 0),vec(1200, 400),vec(600, 800)]
         
@@ -130,7 +132,6 @@ class Enemy(pg.sprite.Sprite):
 
         self.rect.center = self.pos
 
-
 class Fireball(pg.sprite.Sprite):
 
     def __init__(self, game):
@@ -150,9 +151,12 @@ class Fireball(pg.sprite.Sprite):
         self.pos = vec(600, 10)
         self.rect.center = self.pos
         self.life = 2
-        self.speed_x = 3
-        self.speed_y = 3
+        self.speed_x = self.game.difficulty
+        self.speed_y = self.game.difficulty
         self.attack = 1
+        
+        self.increase_difficulty = False
+        self.difficulty_amount = 100
         
         list = [vec(0,400),vec(600, 0),vec(1200, 400),vec(600, 800)]
         
@@ -165,19 +169,19 @@ class Fireball(pg.sprite.Sprite):
 
 
         if self.game.my_player.pos.x < self.pos.x:
-            self.speed_x = -3
+            self.speed_x = -4
             self.image = self.image_left
             self.rect = self.image.get_rect()
         if self.game.my_player.pos.x > self.pos.x:
-            self.speed_x = 3
+            self.speed_x = 4
             self.image = self.image_right
             self.rect = self.image.get_rect()
         if self.game.my_player.pos.y < self.pos.y:
-            self.speed_y = -3
+            self.speed_y = -4
             self.image = self.image_up
             self.rect = self.image.get_rect()
         if self.game.my_player.pos.y > self.pos.y:
-            self.speed_y = 3
+            self.speed_y = 4
             self.image = self.image_down
             self.rect = self.image.get_rect()
         
@@ -204,9 +208,12 @@ class Arrow(pg.sprite.Sprite):
         self.pos = vec(0, 400)
         self.rect.center = self.pos
         self.life = 2
-        self.speed_x = 3
-        self.speed_y = 3
+        self.speed_x = self.game.difficulty
+        self.speed_y = self.game.difficulty
         self.attack = 1
+        
+        self.increase_difficulty = False
+        self.difficulty_amount = 100
         
         list = [vec(0,400),vec(600, 0),vec(1200, 400),vec(600, 800)]
         

@@ -24,7 +24,6 @@ class Game():
         self.screen = pg.display.set_mode((width, height))
         self.clock = pg.time.Clock()
         
-        self.points = 0
         self.text_you_died = self.comic_sans30.render('You Died', False, red)
 
         
@@ -41,6 +40,12 @@ class Game():
     
         self.my_shield = Shield(self.my_player)
         self.all_sprites.add(self.my_shield)
+        
+        self.difficulty = -3
+        self.difficulty_amount = 10
+        self.increase_difficulty = False
+        self.points = 0
+
 
         self.run()
         
@@ -76,27 +81,27 @@ class Game():
         
         self.hits = pg.sprite.spritecollide(self.my_player, self.enemies, True)
      
-        self.hits3 = pg.sprite.spritecollide(self.my_player, self.arrows, True)
+        self.hits2 = pg.sprite.spritecollide(self.my_player, self.arrows, True)
         
         self.hits3 = pg.sprite.spritecollide(self.my_player, self.fireballs, True)
-        if self.hits3:
-            self.points += 1
+
         self.block = pg.sprite.spritecollide(self.my_shield, self.enemies, True)
    
         self.block3 = pg.sprite.spritecollide(self.my_shield, self.arrows, True)
         
         self.block3 = pg.sprite.spritecollide(self.my_shield, self.fireballs, True)
+
         while len(self.fireballs) < 2:
-            fireball = Fireball(self)
-            self.all_sprites.add(fireball)
-            self.fireballs.add(fireball)
+            self.fireball = Fireball(self)
+            self.all_sprites.add(self.fireball)
+            self.fireballs.add(self.fireball)
             self.points += 1      
             
   
         while len(self.enemies) < 1:
-            knight = Enemy(self)
-            self.all_sprites.add(knight)
-            self.enemies.add(knight)
+            self.knight = Enemy(self)
+            self.all_sprites.add(self.knight)
+            self.enemies.add(self.knight)
             self.points += 1    
             
     
@@ -105,13 +110,26 @@ class Game():
             self.arrow = Arrow(self)
             self.all_sprites.add(self.arrow)
             self.arrows.add(self.arrow)
+            self.points += 1
         
+
         if self.hits:
-            self.my_player.health -= knight.attack
+            self.my_player.health -= self.knight.attack
         if self.hits3:
-            self.my_player.health -= fireball.attack
+            self.my_player.health -= self.fireball.attack
+        if self.hits2:
+            self.my_player.health -= self.arrow.attack
         if self.my_player.health <= 0:
             self.screen.blit(self.text_you_died, middle)
+         
+        if self.points > self.difficulty_amount:
+            self.increase_difficulty = True
+ 
+        if self.increase_difficulty:
+            self.difficulty_amount += 100
+            self.increase_difficulty = False
+            self.difficulty -= 2
+        
 
 
     
@@ -121,8 +139,10 @@ class Game():
         self.all_sprites.draw(self.screen)
 
         self.text_player_hp = self.comic_sans30.render(str(self.my_player.health) + 'HP', False, red)
-
+        self.text_points = self.comic_sans30.render(str(self.points), False, (red))
+        
         self.screen.blit(self.text_player_hp, (10, 5))
+        self.screen.blit(self.text_points, (70, 5))
 
         print("Hits", self.points)
         
