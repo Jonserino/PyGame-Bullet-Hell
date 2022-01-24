@@ -120,13 +120,13 @@ class Enemy(pg.sprite.Sprite):
      
             
         if self.game.my_player.pos.x < self.pos.x:
-            self.speed_x = -1
+            self.speed_x = -self.game.difficulty
         if self.game.my_player.pos.x > self.pos.x:
-            self.speed_x = 1
+            self.speed_x = self.game.difficulty
         if self.game.my_player.pos.y < self.pos.y:
-            self.speed_y = -1
+            self.speed_y = -self.game.difficulty
         if self.game.my_player.pos.y > self.pos.y:
-            self.speed_y = 1
+            self.speed_y = self.game.difficulty
             
 
 
@@ -169,19 +169,19 @@ class Fireball(pg.sprite.Sprite):
 
 
         if self.game.my_player.pos.x < self.pos.x:
-            self.speed_x = -4
+            self.speed_x = -self.game.difficulty
             self.image = self.image_left
             self.rect = self.image.get_rect()
         if self.game.my_player.pos.x > self.pos.x:
-            self.speed_x = 4
+            self.speed_x = self.game.difficulty
             self.image = self.image_right
             self.rect = self.image.get_rect()
         if self.game.my_player.pos.y < self.pos.y:
-            self.speed_y = -4
+            self.speed_y = -self.game.difficulty
             self.image = self.image_up
             self.rect = self.image.get_rect()
         if self.game.my_player.pos.y > self.pos.y:
-            self.speed_y = 4
+            self.speed_y = self.game.difficulty
             self.image = self.image_down
             self.rect = self.image.get_rect()
         
@@ -225,21 +225,21 @@ class Arrow(pg.sprite.Sprite):
         self.pos.y += self.speed_y
     
         if self.game.my_player.pos.x < self.pos.x:
-            self.speed_x = -3
+            self.speed_x = -self.game.difficulty
             self.image = self.image_left
-        self.rect = self.image.get_rect()
+            self.rect = self.image.get_rect()
         if self.game.my_player.pos.x > self.pos.x:
-            self.speed_x = 3
+            self.speed_x = self.game.difficulty
             self.image = self.image_right
-        self.rect = self.image.get_rect()
+            self.rect = self.image.get_rect()
         if self.game.my_player.pos.y < self.pos.y:
-            self.speed_y = -3
+            self.speed_y = -self.game.difficulty
             self.image = self.image_up
-        self.rect = self.image.get_rect()
+            self.rect = self.image.get_rect()
         if self.game.my_player.pos.y > self.pos.y:
-            self.speed_y = 3
+            self.speed_y = self.game.difficulty
             self.image = self.image_down
-        self.rect = self.image.get_rect()
+            self.rect = self.image.get_rect()
         
         
 

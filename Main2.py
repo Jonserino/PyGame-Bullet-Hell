@@ -24,7 +24,6 @@ class Game():
         self.screen = pg.display.set_mode((width, height))
         self.clock = pg.time.Clock()
         
-        self.text_you_died = self.comic_sans30.render('You Died', False, red)
 
         
         self.new()
@@ -41,7 +40,7 @@ class Game():
         self.my_shield = Shield(self.my_player)
         self.all_sprites.add(self.my_shield)
         
-        self.difficulty = -3
+        self.difficulty = 3
         self.difficulty_amount = 10
         self.increase_difficulty = False
         self.points = 0
@@ -120,7 +119,7 @@ class Game():
         if self.hits2:
             self.my_player.health -= self.arrow.attack
         if self.my_player.health <= 0:
-            self.screen.blit(self.text_you_died, middle)
+            self.game_over()
          
         if self.points > self.difficulty_amount:
             self.increase_difficulty = True
@@ -128,7 +127,8 @@ class Game():
         if self.increase_difficulty:
             self.difficulty_amount += 100
             self.increase_difficulty = False
-            self.difficulty -= 2
+            self.difficulty += 3
+        
         
 
 
@@ -147,6 +147,36 @@ class Game():
         print("Hits", self.points)
         
         pg.display.update()
+
+    def game_over(self):
+        while self.playing: # Game Loop
+            self.clock.tick(0)
+            self.events()    
+            self.update()
+            self.draw()
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                self.playing = False
+                pg.quit()
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_q:
+                self.playing = False
+                pg.quit()
+
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_r:
+                self.playing = False
+                self.new()
         
+        self.screen.fill(black)
+        
+        self.text_you_died = self.comic_sans30.render('You Died', False, red)
+
+        self.screen.blit(self.text_you_died, (middle))
+        
+
+        
+
 g = Game()
 
