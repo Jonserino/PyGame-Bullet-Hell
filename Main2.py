@@ -118,8 +118,8 @@ class Game():
             self.my_player.health -= self.fireball.attack
         if self.hits2:
             self.my_player.health -= self.arrow.attack
-        if self.my_player.health <= 0:
-            self.game_over()
+        #if self.my_player.health <= 0:
+            #self.game_over()
          
         if self.points > self.difficulty_amount:
             self.increase_difficulty = True
@@ -127,7 +127,7 @@ class Game():
         if self.increase_difficulty:
             self.difficulty_amount += 100
             self.increase_difficulty = False
-            self.difficulty += 3
+            self.difficulty += 1
         
         
 
@@ -147,7 +147,7 @@ class Game():
         print("Hits", self.points)
         
         pg.display.update()
-
+    '''
     def game_over(self):
         while self.playing: # Game Loop
             self.clock.tick(0)
@@ -174,7 +174,7 @@ class Game():
         self.text_you_died = self.comic_sans30.render('You Died', False, red)
 
         self.screen.blit(self.text_you_died, (middle))
-        
+    '''
 
         
 

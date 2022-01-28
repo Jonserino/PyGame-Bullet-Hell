@@ -151,8 +151,8 @@ class Fireball(pg.sprite.Sprite):
         self.pos = vec(600, 10)
         self.rect.center = self.pos
         self.life = 2
-        self.speed_x = self.game.difficulty
-        self.speed_y = self.game.difficulty
+        self.speed_x = self.game.difficulty + 2
+        self.speed_y = self.game.difficulty + 2
         self.attack = 1
         
         self.increase_difficulty = False
@@ -208,8 +208,8 @@ class Arrow(pg.sprite.Sprite):
         self.pos = vec(0, 400)
         self.rect.center = self.pos
         self.life = 2
-        self.speed_x = self.game.difficulty
-        self.speed_y = self.game.difficulty
+        self.speed_x = self.game.difficulty + 1
+        self.speed_y = self.game.difficulty + 1
         self.attack = 1
         
         self.increase_difficulty = False
