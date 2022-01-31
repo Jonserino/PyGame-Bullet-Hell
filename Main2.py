@@ -21,7 +21,7 @@ class Game():
         
         self.comic_sans30 = pg.font.SysFont("Comic Sams MS", 30)
         
-        self.screen = pg.display.set_mode((width, height))
+        self.screen = pg.display.set_mode((width, height), pg.FULLSCREEN)
         self.clock = pg.time.Clock()
         
 
@@ -118,8 +118,8 @@ class Game():
             self.my_player.health -= self.fireball.attack
         if self.hits2:
             self.my_player.health -= self.arrow.attack
-        #if self.my_player.health <= 0:
-            #self.game_over()
+        if self.my_player.health <= 0:
+            self.game_over()
          
         if self.points > self.difficulty_amount:
             self.increase_difficulty = True
@@ -147,34 +147,34 @@ class Game():
         print("Hits", self.points)
         
         pg.display.update()
-    '''
+    
     def game_over(self):
-        while self.playing: # Game Loop
+        self.gameover = True
+        while self.gameover:
             self.clock.tick(0)
-            self.events()    
-            self.update()
-            self.draw()
 
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                self.playing = False
-                pg.quit()
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_q:
-                self.playing = False
-                pg.quit()
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.playing = False
+                    pg.quit()
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_q:
+                        self.playing = False
+                        pg.quit()
 
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_r:
-                self.playing = False
-                self.new()
-        
-        self.screen.fill(black)
-        
-        self.text_you_died = self.comic_sans30.render('You Died', False, red)
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_r:
+                        self.playing = False
+                        self.new()
+            
+            self.screen.fill(black)
+            
+            self.text_you_died = self.comic_sans30.render('You Died', False, red)
 
-        self.screen.blit(self.text_you_died, (middle))
-    '''
+            self.screen.blit(self.text_you_died, (middle))
+            
+            pg.display.update()
+    
 
         
 

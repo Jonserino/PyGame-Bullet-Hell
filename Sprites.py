@@ -100,10 +100,10 @@ class Enemy(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.pos = vec(1200, 400)
         self.rect.center = self.pos
-        self.life = 10
+        self.life = 5
         self.speed_x = self.game.difficulty
         self.speed_y = self.game.difficulty
-        self.attack = 10
+        self.attack = 5
         
         self.increase_difficulty = False
         self.difficulty_amount = 100
