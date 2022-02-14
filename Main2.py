@@ -47,7 +47,7 @@ class Game():
 
 
         self.run()
-        
+       
     def run(self):
         self.playing = True
         while self.playing: # Game Loop
@@ -72,9 +72,7 @@ class Game():
                 if event.key == pg.K_r:
                     self.playing = False
                     self.new()
-        
-
-        
+    
     def update(self):
         self.all_sprites.update()
         
@@ -129,10 +127,6 @@ class Game():
             self.increase_difficulty = False
             self.difficulty += 1
         
-        
-
-
-    
     def draw(self):
         self.screen.fill(black)
 
@@ -175,8 +169,4 @@ class Game():
             
             pg.display.update()
     
-
-        
-
 g = Game()
-
