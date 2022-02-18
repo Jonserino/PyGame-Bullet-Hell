@@ -11,6 +11,7 @@ white = (255, 255, 255)
 gray = (127.5, 127.5, 127.5)
 light_gray = (175, 175, 175)
 red = (255, 0, 0)
+purple = (255, 0, 255)
 green = (0, 255, 0)
 blue = (0, 0, 255)
 light_blue = (10, 175, 255)
@@ -21,7 +22,12 @@ class Game():
         pg.init()
         
         
+        self.comic_sans25 = pg.font.SysFont("Comic Sams MS", 25)
         self.comic_sans30 = pg.font.SysFont("Comic Sams MS", 30)
+        self.comic_sans35 = pg.font.SysFont("Comic Sams MS", 35)
+        self.comic_sans40 = pg.font.SysFont("Comic Sams MS", 40)
+        self.comic_sans45 = pg.font.SysFont("Comic Sams MS", 45)
+        self.comic_sans50 = pg.font.SysFont("Comic Sams MS", 50)
         
         self.screen = pg.display.set_mode((width, height), pg.FULLSCREEN)
         self.clock = pg.time.Clock()
@@ -32,13 +38,19 @@ class Game():
     
     def new(self):
         self.all_sprites = pg.sprite.Group()
+        self.moving_sprites = pg.sprite.Group()
+        
         self.enemies = pg.sprite.Group()
-        self.fireballs = pg.sprite.Group()
         self.arrows = pg.sprite.Group()
+        self.fireballs = pg.sprite.Group()
+        
+        self.firewall = pg.sprite.Group()
+        self.all_sprites.add(self.firewall)
+        self.moving_sprites.add(self.firewall)
         
         self.my_player = Player()
         self.all_sprites.add(self.my_player)
-    
+        
         self.my_shield = Shield(self.my_player)
         self.all_sprites.add(self.my_shield)
         
@@ -49,7 +61,35 @@ class Game():
 
 
         self.run()
-       
+        
+    def newhard(self):
+        self.all_sprites = pg.sprite.Group()
+        
+        self.moving_sprites = pg.sprite.Group()
+        self.firewall1 = Firewall(self, 600, 800)
+        self.firewall2 = Firewall(self, 0, 800)
+        self.firewall3 = Firewall(self, 1200, 800)
+        self.moving_sprites.add(self.firewall1, self.firewall2, self.firewall3)
+        
+        self.enemies = pg.sprite.Group()
+        self.arrows = pg.sprite.Group()
+        self.fireballs = pg.sprite.Group()
+        self.firewalls = pg.sprite.Group()
+                
+        self.my_player = Player()
+        self.all_sprites.add(self.my_player)
+        
+        self.my_shield = Shield(self.my_player)
+        self.all_sprites.add(self.my_shield)
+        
+        self.difficulty = 6
+        self.difficulty_amount = 20
+        self.increase_difficulty = False
+        self.points = 0
+
+
+        self.runhard()
+
     def run(self):
         self.playing = True
         while self.playing: # Game Loop
@@ -59,7 +99,17 @@ class Game():
             self.draw()
             
         self.new()
-    
+
+    def runhard(self):
+        self.playing = True
+        while self.playing: # Game Loop
+            self.clock.tick(fps)
+            self.events()    
+            self.update()
+            self.draw()
+            
+        self.newhard()
+
     def events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -159,6 +209,9 @@ class Game():
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_r:
                         self.new()
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_h:
+                        self.newhard()
                 
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_i:
@@ -167,21 +220,23 @@ class Game():
             self.screen.fill(light_blue)
             
             
-            self.text_title = self.comic_sans30.render('Blocking Bullets', False, blue)
-            self.text_start = self.comic_sans30.render('Press "R" to Start', False, red)
-            self.text_info = self.comic_sans30.render('Press "I" for Info', False, green)
+            self.text_title = self.comic_sans50.render('Blocking Bullets', False, blue)
+            self.text_start = self.comic_sans40.render('Press "R" to Start', False, red)
+            self.text_hard = self.comic_sans25.render('Press "H" for Hard Mode', False, purple)
+            self.text_info = self.comic_sans35.render('Press "I" for Info', False, green)
             self.text_quit = self.comic_sans30.render('Press "Q" to Quit', False, red)
 
             self.screen.blit(self.text_title, ((width/2) - (self.text_title.get_width()/2), 200))
             self.screen.blit(self.text_start, ((width/2) - (self.text_start.get_width()/2), 400))
+            self.screen.blit(self.text_hard, ((width/2) - (self.text_quit.get_width()/1.70), 450))
             self.screen.blit(self.text_info, ((width/2) - (self.text_info.get_width()/2), 600))
             self.screen.blit(self.text_quit, ((width/2) - (self.text_quit.get_width()/2), 650))
 
             pg.display.update()
             
     def info(self):
-        self.info = True
-        while self.info:
+        self.information = True
+        while self.information:
             self.clock.tick(0)
 
             for event in pg.event.get():
@@ -201,7 +256,7 @@ class Game():
                         
             self.screen.fill(dark_green)
             
-            self.text_info = self.comic_sans30.render('Info:', False, green)
+            self.text_info = self.comic_sans40.render('Info:', False, green)
             self.text_controls = self.comic_sans30.render('Controls:', False, green)
             self.text_arrows = self.comic_sans30.render('"Arrow Keys to move the Shield"', False, green)
             self.text_goal = self.comic_sans30.render('Goal:', False, green)
@@ -218,9 +273,6 @@ class Game():
             self.screen.blit(self.text_quit, (20, 700))
             
             pg.display.update()
-
-
-
 
     def game_over(self):
         self.gameover = True
@@ -244,6 +296,9 @@ class Game():
      
             
             self.screen.fill(black)
+            
+            self.moving_sprites.draw(self.screen)
+            self.moving_sprites.update()
             
             self.text_you_died = self.comic_sans30.render('You Died', False, red)
             self.text_restart = self.comic_sans30.render('Press "R" to Restart', False, red)

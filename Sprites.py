@@ -19,6 +19,10 @@ arrow_image_up = pg.image.load("arrow_up.png")
 arrow_image_down = pg.image.load("arrow_down.png")
 arrow_image_left = pg.image.load("arrow_left.png")
 arrow_image_right = pg.image.load("arrow_right.png")
+firewall_image_1 = pg.image.load("firewall_1.png")
+firewall_image_2 = pg.image.load("firewall_2.png")
+firewall_image_3 = pg.image.load("firewall_3.png")
+
 
 
 class Player(pg.sprite.Sprite):
@@ -250,6 +254,30 @@ class Arrow(pg.sprite.Sprite):
         
 
         self.rect.center = self.pos
+
+class Firewall(pg.sprite.Sprite):
+    
+    def __init__(self, game, x ,y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+        self.sprites = []
+        self.sprites.append(pg.image.load("firewall_1.png"))
+        self.sprites.append(pg.image.load("firewall_2.png"))
+        self.sprites.append(pg.image.load("firewall_3.png"))
+        self.current_sprite = 0
+        self.image = self.sprites[self.current_sprite]
+        self.image = pg.transform.scale(self.image, (1200, 400))
+        
+        self.rect = self.image.get_rect()
+        self.rect.center = vec(x,y)
+
+    def update(self):
+        self.current_sprite += 1
+        
+        if self.current_sprite >= len(self.sprites):
+            self.current_sprite = 0
+        
+        self.image = self.sprites[self.current_sprite]
 
 '''
 class Grass(pg.sprite.Sprite):
