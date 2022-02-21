@@ -152,8 +152,6 @@ class Fireball(pg.sprite.Sprite):
         self.image_left = pg.transform.scale(self.image_right, (40, 35))
         self.image_right = pg.transform.scale(self.image_left, (40, 35))
         self.rect = self.image.get_rect()
-        self.pos = vec(600, 10)
-        self.rect.center = self.pos
         self.life = 2
         self.speed_x = self.game.difficulty + 2
         self.speed_y = self.game.difficulty + 2
@@ -165,6 +163,7 @@ class Fireball(pg.sprite.Sprite):
         list = [vec(0,400),vec(600, 0),vec(1200, 400),vec(600, 800)]
         
         self.pos = list[randint(0,3)]
+        self.rect.center = self.pos
 
 
     def update(self):
@@ -255,6 +254,7 @@ class Arrow(pg.sprite.Sprite):
 
         self.rect.center = self.pos
 
+'''
 class Firewall(pg.sprite.Sprite):
     
     def __init__(self, game, x ,y):
@@ -267,26 +267,31 @@ class Firewall(pg.sprite.Sprite):
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
         self.image = pg.transform.scale(self.image, (1200, 400))
+        self.current_frame = 0   # lag denne variabelen for player spriten
+        self.last_update = 0
         
         self.rect = self.image.get_rect()
         self.rect.center = vec(x,y)
 
     def update(self):
+        self.animate()
+    
         self.current_sprite += 1
         
         if self.current_sprite >= len(self.sprites):
             self.current_sprite = 0
+            
+    
+            
+    def animate(self):
+        now = pg.time.get_ticks()
+        
+        if now - self.last_update > 350:   # her sørger vi for at vi bytte bilde kun hver 350 tick, lavere tall animerer fortere
+            self.last_update = now
+            self.current_sprite = (self.current_sprite + 1) % len(self.sprites)
+            self.image = self.sprites[self.current_sprite]
+            self.rect = self.image.get_rect()
+           
         
         self.image = self.sprites[self.current_sprite]
-
-'''
-class Grass(pg.sprite.Sprite):
-    def __init__(self, game):
-        pg.sprite.Sprite.__init__(self)
-        self.game = game
-        self.image = pg.fill.rectangle(10, 255, 175)
-        self.image = pg.transform.scale(self.image, (1200, 800))
-        self.rect = self.image.get_rect()
-        self.pos = vec(1200, 500)
-        self.rect.center = self.pos
 '''

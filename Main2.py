@@ -38,16 +38,22 @@ class Game():
     
     def new(self):
         self.all_sprites = pg.sprite.Group()
+        
+        '''
         self.moving_sprites = pg.sprite.Group()
+        self.firewall1 = Firewall(self, 600, 800)
+        self.firewall2 = Firewall(self, 0, 800)
+        self.firewall3 = Firewall(self, 1200, 800)
+        self.moving_sprites.add(self.firewall1)
+        self.moving_sprites.add(self.firewall2)
+        self.moving_sprites.add(self.firewall3)
+        '''
         
         self.enemies = pg.sprite.Group()
         self.arrows = pg.sprite.Group()
         self.fireballs = pg.sprite.Group()
-        
-        self.firewall = pg.sprite.Group()
-        self.all_sprites.add(self.firewall)
-        self.moving_sprites.add(self.firewall)
-        
+        self.firewalls = pg.sprite.Group()
+                
         self.my_player = Player()
         self.all_sprites.add(self.my_player)
         
@@ -65,11 +71,15 @@ class Game():
     def newhard(self):
         self.all_sprites = pg.sprite.Group()
         
+        '''
         self.moving_sprites = pg.sprite.Group()
         self.firewall1 = Firewall(self, 600, 800)
         self.firewall2 = Firewall(self, 0, 800)
         self.firewall3 = Firewall(self, 1200, 800)
-        self.moving_sprites.add(self.firewall1, self.firewall2, self.firewall3)
+        self.moving_sprites.add(self.firewall1)
+        self.moving_sprites.add(self.firewall2)
+        self.moving_sprites.add(self.firewall3)
+        '''
         
         self.enemies = pg.sprite.Group()
         self.arrows = pg.sprite.Group()
@@ -261,14 +271,39 @@ class Game():
             self.text_arrows = self.comic_sans30.render('"Arrow Keys to move the Shield"', False, green)
             self.text_goal = self.comic_sans30.render('Goal:', False, green)
             self.text_topic = self.comic_sans30.render('"Block all of the projectiles and last as long as you can!"', False, green)
+            self.text_enemies = self.comic_sans30.render('Enemies:', False, green)
+            self.text_knight = self.comic_sans30.render('Knight:', False, green)
+            self.text_knight_info = self.comic_sans30.render('"The Knights move a bit slower, but they deal 5 dmg!"', False, green)
+            self.text_arrow = self.comic_sans30.render('Arrow:', False, green)
+            self.text_arrow_info = self.comic_sans30.render('"Arrows does not move as fast as Fireballs, but they are faster then Knights. They deal 1 dmg!"', False, green)
+            self.text_fireball = self.comic_sans30.render('Fireball:', False, green)
+            self.text_fireball_info = self.comic_sans30.render('"Fireballs are the fastest and they deal 1 dmg!"', False, green)
             self.text_back = self.comic_sans30.render('Press "F" to go back to the Start Screen"', False, green)
             self.text_quit = self.comic_sans30.render('Press "Q" to Quit', False, green)
 
             self.screen.blit(self.text_info, (10, 10))
+            
+            
             self.screen.blit(self.text_controls, (30, 40))
             self.screen.blit(self.text_arrows, (50, 70))
+            
+            
             self.screen.blit(self.text_goal, (30, 100))
             self.screen.blit(self.text_topic, (50, 130))
+            
+            
+            self.screen.blit(self.text_enemies, (30, 190))
+             
+            self.screen.blit(self.text_knight, (40, 220))
+            self.screen.blit(self.text_knight_info, (50, 250))
+            
+            self.screen.blit(self.text_arrow , (40, 280))
+            self.screen.blit(self.text_arrow_info, (50, 310))
+            
+            self.screen.blit(self.text_fireball, (40, 340))
+            self.screen.blit(self.text_fireball_info, (50, 370))
+            
+            
             self.screen.blit(self.text_back, (20, 750))
             self.screen.blit(self.text_quit, (20, 700))
             
@@ -289,6 +324,11 @@ class Game():
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_r:
                         self.new()
+
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_h:
+                        self.newhard()
+
                 
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_f:
@@ -297,16 +337,18 @@ class Game():
             
             self.screen.fill(black)
             
-            self.moving_sprites.draw(self.screen)
-            self.moving_sprites.update()
+            #self.moving_sprites.draw(self.screen)
+            #self.moving_sprites.update()
             
             self.text_you_died = self.comic_sans30.render('You Died', False, red)
-            self.text_restart = self.comic_sans30.render('Press "R" to Restart', False, red)
+            self.text_restart = self.comic_sans30.render('Press "R" for Normal Mode', False, red)
+            self.text_restart_hard = self.comic_sans30.render('Press "H" for Hard Mode', False, red)
             self.text_start = self.comic_sans30.render('Press "F" to go to the Start Screen', False, red)
             self.text_quit = self.comic_sans30.render('Press "Q" to Quit', False, red)
 
             self.screen.blit(self.text_you_died, ((width/2) - (self.text_you_died.get_width()/2) , 400))
             self.screen.blit(self.text_restart, ((width/2) - (self.text_restart.get_width()/2), 500))
+            self.screen.blit(self.text_restart_hard, ((width/2) - (self.text_restart_hard.get_width()/2), 550))
             self.screen.blit(self.text_start, ((width/2) - (self.text_start.get_width()/2), 600))
             self.screen.blit(self.text_quit, ((width/2) - (self.text_quit.get_width()/2), 650))
 
