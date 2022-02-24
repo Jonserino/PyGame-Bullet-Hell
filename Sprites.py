@@ -254,7 +254,6 @@ class Arrow(pg.sprite.Sprite):
 
         self.rect.center = self.pos
 
-'''
 class Firewall(pg.sprite.Sprite):
     
     def __init__(self, game, x ,y):
@@ -294,4 +293,4 @@ class Firewall(pg.sprite.Sprite):
            
         
         self.image = self.sprites[self.current_sprite]
-'''
+

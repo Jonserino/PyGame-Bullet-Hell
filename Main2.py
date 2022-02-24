@@ -39,7 +39,7 @@ class Game():
     def new(self):
         self.all_sprites = pg.sprite.Group()
         
-        '''
+        
         self.moving_sprites = pg.sprite.Group()
         self.firewall1 = Firewall(self, 600, 800)
         self.firewall2 = Firewall(self, 0, 800)
@@ -47,7 +47,7 @@ class Game():
         self.moving_sprites.add(self.firewall1)
         self.moving_sprites.add(self.firewall2)
         self.moving_sprites.add(self.firewall3)
-        '''
+        
         
         self.enemies = pg.sprite.Group()
         self.arrows = pg.sprite.Group()
@@ -71,7 +71,7 @@ class Game():
     def newhard(self):
         self.all_sprites = pg.sprite.Group()
         
-        '''
+        
         self.moving_sprites = pg.sprite.Group()
         self.firewall1 = Firewall(self, 600, 800)
         self.firewall2 = Firewall(self, 0, 800)
@@ -79,7 +79,7 @@ class Game():
         self.moving_sprites.add(self.firewall1)
         self.moving_sprites.add(self.firewall2)
         self.moving_sprites.add(self.firewall3)
-        '''
+        
         
         self.enemies = pg.sprite.Group()
         self.arrows = pg.sprite.Group()
@@ -337,8 +337,8 @@ class Game():
             
             self.screen.fill(black)
             
-            #self.moving_sprites.draw(self.screen)
-            #self.moving_sprites.update()
+            self.moving_sprites.draw(self.screen)
+            self.moving_sprites.update()
             
             self.text_you_died = self.comic_sans30.render('You Died', False, red)
             self.text_restart = self.comic_sans30.render('Press "R" for Normal Mode', False, red)
